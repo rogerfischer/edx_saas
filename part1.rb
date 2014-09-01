@@ -22,7 +22,8 @@ array4 = [12,11,14,15,16]
 puts sum(array0)
 puts sum(array1)
 puts sum(array2)
-
+puts sum(array3)
+puts sum(array4)
 
 # 2
 # -
@@ -32,20 +33,21 @@ puts sum(array2)
 
 def max_2_sum(array)
   if array.empty?
-  	0
+    0
   elsif array.length == 1 
-  	array
+    array
   else
-  	# Compare each number to each other to figure out which one is bigger, repeat with the bigger 
-  	# each and <=>
-  	# how to keep the two largest elements?puts sum(array0)
-  	"max_2_sum -- TO DO"
+    # method returns the sum of its two largest elements.
+    array.sort.last(2).inject(:+) 
   end
 end
+
 
 puts max_2_sum(array0)
 puts max_2_sum(array1)
 puts max_2_sum(array2)
+puts max_2_sum(array3)
+puts max_2_sum(array4)
 
 # 3
 # -
@@ -55,22 +57,11 @@ puts max_2_sum(array2)
 
 def sum_to_n?(array, n)
   #if array[elem1] + array[elem2] == n then true
-  if array.empty?
-  	false
-  elsif array.length == 1
+  if array.empty? || array.length == 1
     false
-  else
-    # Could this be done recursively and more elegantly? With redo or retry maybe?
-    # Or hash table: http://stackoverflow.com/questions/2666654/how-to-write-an-
-    # algorithm-to-check-if-the-sum-of-any-two-numbers-in-an-array-lis 
-  	array.each do |arr_elem|
-  	  elem1 = arr_elem
-  	  array.each do |arr_elem|
-  	    elem2 = arr_elem
-  	    sum = elem1 + elem2
-  	    return true if n == sum
-  	  end
-    end
+  elsif array.combination(2).map {|arr| return true if arr.reduce(:+) == n} 
+    # Una's solution is so much nicer, see below
+    # array.combination(2).any? {|a,b| a+b == n}
   end
 end
 
